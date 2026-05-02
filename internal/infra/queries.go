@@ -14,7 +14,7 @@ func FindTodayPushups(db *sql.DB) int {
 
 	err := db.QueryRow(query, today).Scan(&total)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln("Ocorreu um erro ao procurar pelos registros de flexões")
 	}
 
 	return total

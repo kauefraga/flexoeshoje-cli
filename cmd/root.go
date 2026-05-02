@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/kauefraga/flexoeshoje-cli/internal/commands"
+	"github.com/kauefraga/flexoeshoje-cli/internal/infra"
 	"github.com/spf13/cobra"
 )
 
@@ -13,6 +14,11 @@ var rootCmd = &cobra.Command{
 	Short:   "Registre suas flexões diárias",
 	Long:    "Registre quantas flexões de braço você executou hoje sem sair do terminal.",
 	Run:     commands.RootCommand,
+}
+
+func init() {
+	db := infra.ConnectToDB()
+	infra.CreatePushupsTable(db)
 }
 
 func main() {
