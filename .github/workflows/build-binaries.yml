@@ -2,14 +2,15 @@ name: Prebuilt binaries
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    tags: 
+      - 'v*'
 
 jobs:
 
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
     - uses: actions/checkout@v4
 
@@ -26,3 +27,12 @@ jobs:
 
     - name: Build for macos
       run: GOOS=darwin go build -ldflags='-w -s' -o flexoeshoje-darwin cmd/root.go
+
+    - name: Create Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh release create ${{ github.ref_name }} \
+          --title "Release ${{ github.ref_name }}" \
+          --generate-notes \
+          flexoeshoje flexoeshoje.exe flexoeshoje-darwin
