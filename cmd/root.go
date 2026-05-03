@@ -23,6 +23,6 @@ func init() {
 
 func main() {
 	if err := rootCmd.Execute(); err != nil {
-		log.Fatalln("Algo deu errado durante a execução")
+		log.Fatalln("Ocorreu um erro durante a execução")
 	}
 }

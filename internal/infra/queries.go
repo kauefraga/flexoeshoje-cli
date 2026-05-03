@@ -2,22 +2,18 @@ package infra
 
 import (
 	"database/sql"
-	"log"
 	"time"
 )
 
-func FindTodayPushups(db *sql.DB) int {
-	var total int
+func FindTodayPushups(db *sql.DB) (int, error) {
+	total := 0
 
-	today := time.Now().Format("2006-01-02")
 	query := `SELECT COALESCE(SUM(repetitions), 0) FROM pushups WHERE created_at >= ? LIMIT 1`
+	today := time.Now().Format("2006-01-02")
 
 	err := db.QueryRow(query, today).Scan(&total)
-	if err != nil {
-		log.Fatalln("Ocorreu um erro ao procurar pelos registros de flexões")
-	}
 
-	return total
+	return total, err
 }
 
 func CreateOnePushup(db *sql.DB, repetitions int) error {

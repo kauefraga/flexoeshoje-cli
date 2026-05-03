@@ -19,7 +19,10 @@ func RootCommand(cmd *cobra.Command, args []string) {
 	defer db.Close()
 
 	if len(args) == 0 {
-		reps := infra.FindTodayPushups(db)
+		reps, err := infra.FindTodayPushups(db)
+		if err != nil {
+			log.Fatalln("Ocorreu um erro ao procurar pelos registros de flexões")
+		}
 
 		if reps == 0 {
 			color.Magenta("Nenhuma flexão de braço executada hoje. Bora lá!\n")
@@ -39,7 +42,6 @@ func RootCommand(cmd *cobra.Command, args []string) {
 	}
 
 	err = infra.CreateOnePushup(db, newRepetitions)
-
 	if err != nil {
 		log.Fatalln("Ocorreu um erro ao registrar suas flexões")
 	}
