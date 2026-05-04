@@ -13,6 +13,12 @@ flexoeshoje
 
 # Registre determinado número flexões no dia de hoje
 flexoeshoje 10
+
+# Subtraia um número de flexões caso você precise
+flexoeshoje 5 --subtrair
+
+# Conhece mais sobre a CLI
+flexoeshoje --help
 ```
 
 ## Instalação
