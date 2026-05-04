@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/fatih/color"
+	"github.com/kauefraga/flexoeshoje-cli/internal/entities"
 	"github.com/kauefraga/flexoeshoje-cli/internal/infra"
 	"github.com/spf13/cobra"
 	_ "modernc.org/sqlite"
@@ -19,19 +20,38 @@ func RootCommand(cmd *cobra.Command, args []string) {
 	defer db.Close()
 
 	if len(args) == 0 {
-		reps, err := infra.FindTodayPushups(db)
+		pushups, err := infra.FindTodayPushups(db)
 		if err != nil {
-			log.Fatalln("Ocorreu um erro ao procurar pelos registros de flexões")
+			log.Fatalln(err)
 		}
 
-		if reps == 0 {
-			color.Magenta("Nenhuma flexão de braço executada hoje. Bora lá!\n")
+		if len(pushups) == 0 {
+			highlight := color.New(color.FgHiYellow, color.Bold)
+
+			fmt.Printf("Nenhuma flexão de braço executada hoje. %s\n", highlight.Sprint("Bora lá! 10 ZERO, GUERREIRO!!"))
 			return
 		}
 
-		currentDate := time.Now().Local().Format("2006-01-02")
+		var totalReps int
 
-		fmt.Printf("Flexões de braço hoje (%v): %d\n", currentDate, reps)
+		for _, p := range pushups {
+			if p.Type == "subtract" {
+				color.Magenta("[%v] menos %d repetições\n", p.CreatedAt.Format("15:04:05"), p.Repetitions)
+				totalReps -= p.Repetitions
+				continue
+			}
+
+			color.Magenta("[%v] mais %d repetições\n", p.CreatedAt.Format("15:04:05"), p.Repetitions)
+			totalReps += p.Repetitions
+		}
+
+		today := time.Now().Local().Format("02-01-2006")
+
+		fmt.Printf(
+			"Hoje você fez %s flexões de braço (%s)\n",
+			color.HiCyanString("%d", totalReps),
+			color.HiCyanString("%v", today),
+		)
 		return
 	}
 
@@ -41,10 +61,25 @@ func RootCommand(cmd *cobra.Command, args []string) {
 		os.Exit(1)
 	}
 
-	err = infra.CreateOnePushup(db, newRepetitions)
+	isToSubtract, err := cmd.Flags().GetBool("subtrair")
+	if err != nil {
+		log.Fatalln("Ocorreu um erro ao ler a flag subtrair")
+	}
+
+	newPushup := entities.NewPushup{
+		Repetitions: newRepetitions,
+		Type:        "add",
+		CreatedAt:   time.Now(),
+	}
+
+	if isToSubtract {
+		newPushup.Type = "subtract"
+	}
+
+	err = infra.CreateOnePushup(db, newPushup)
 	if err != nil {
 		log.Fatalln("Ocorreu um erro ao registrar suas flexões")
 	}
 
-	color.Green("Suas flexões foram registradas com sucesso, EXCELENTE!\n")
+	fmt.Printf("Suas flexões foram registradas com sucesso, %s\n", color.GreenString("EXCELENTE!"))
 }
