@@ -4,7 +4,6 @@ import (
 	"log"
 
 	"github.com/kauefraga/flexoeshoje-cli/internal/commands"
-	"github.com/kauefraga/flexoeshoje-cli/internal/infra"
 	"github.com/spf13/cobra"
 )
 
@@ -22,9 +21,6 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
-	db := infra.ConnectToDB()
-	infra.CreatePushupsTable(db)
-
 	rootCmd.Flags().BoolP("subtrair", "s", false, "subtrai flexões")
 }
 
