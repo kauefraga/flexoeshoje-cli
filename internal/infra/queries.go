@@ -52,6 +52,9 @@ func CreateOnePushup(db *sql.DB, pushup entities.NewPushup) error {
 		pushup.Type,
 		pushup.CreatedAt.Format("2006-01-02 15:04:05"),
 	)
+	if err != nil {
+		return fmt.Errorf("Ocorreu um erro ao registrar suas flexões: %v", err)
+	}
 
-	return err
+	return nil
 }
