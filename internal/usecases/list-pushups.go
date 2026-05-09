@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/fatih/color"
+	"github.com/kauefraga/flexoeshoje-cli/internal/entities"
 	"github.com/kauefraga/flexoeshoje-cli/internal/infra"
 )
 
@@ -27,7 +28,7 @@ func ListPushups(db *sql.DB) error {
 	for _, p := range pushups {
 		executedAt := p.CreatedAt.Format("15:04:05")
 
-		if p.Type == "subtract" {
+		if p.Type == entities.OpSubtract {
 			color.Magenta("[%v] menos %d repetições\n", executedAt, p.Repetitions)
 			totalReps -= p.Repetitions
 			continue

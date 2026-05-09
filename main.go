@@ -9,19 +9,19 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:     "flexoeshoje",
-	Version: "1.1.0",
-	Aliases: []string{"fh"},
+	Version: "2.0.0",
 	Short:   "Registre suas flexões diárias",
 	Long:    "Registre quantas flexões de braço você executou hoje sem sair do terminal.",
-	Example: `  flexoeshoje
-  flexoeshoje 25
-  flexoeshoje 5 --subtrair`,
-	Args: cobra.MaximumNArgs(1),
-	Run:  commands.RootCommand,
+	Example: `  flexoeshoje registro
+  flexoeshoje r
+  flexoeshoje adicionar 30
+  flexoeshoje subtrair 5`,
 }
 
 func init() {
-	rootCmd.Flags().BoolP("subtrair", "s", false, "subtrai flexões")
+	rootCmd.AddCommand(commands.RegisterCmd)
+	rootCmd.AddCommand(commands.AddCmd)
+	rootCmd.AddCommand(commands.SubtractCmd)
 }
 
 func main() {

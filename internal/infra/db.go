@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/fatih/color"
+	_ "modernc.org/sqlite"
 )
 
 func checkIfDBExists(path string) bool {
