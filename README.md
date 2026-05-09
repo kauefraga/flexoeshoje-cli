@@ -1,5 +1,5 @@
 
-# Flexões Hoje ![Versão interface de linha de comando (CLI)](https://img.shields.io/badge/CLI-636b2f)
+# Flexões Hoje ![Versão interface de linha de comando (CLI)](https://img.shields.io/badge/CLI-636b2f) [![Go Reference](https://pkg.go.dev/badge/github.com/kauefraga/flexoeshoje-cli/v2.svg)](https://pkg.go.dev/github.com/kauefraga/flexoeshoje-cli/v2)
 
 Quantas flexões de braço você fez hoje? **Registre sem sair do terminal!**
 
