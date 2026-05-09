@@ -62,6 +62,8 @@ curl -OL https://github.com/kauefraga/flexoeshoje-cli/releases/latest/download/f
 
 Lembre-se de conceder permissão de execução ao binário e mover para um diretório que esteja no `PATH`.
 
+Também é possível instalar pelo gerenciador do Go: `go install github.com/kauefraga/flexoeshoje-cli/v2@latest`.
+
 ## CLI
 
 ### Tudo sobre o comando `registro`
