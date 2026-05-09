@@ -3,13 +3,13 @@ package main
 import (
 	"log"
 
-	"github.com/kauefraga/flexoeshoje-cli/internal/commands"
+	"github.com/kauefraga/flexoeshoje-cli/v2/internal/commands"
 	"github.com/spf13/cobra"
 )
 
 var rootCmd = &cobra.Command{
 	Use:     "flexoeshoje",
-	Version: "2.0.0",
+	Version: "2.0.1",
 	Short:   "Registre suas flexões diárias",
 	Long:    "Registre quantas flexões de braço você executou hoje sem sair do terminal.",
 	Example: `  flexoeshoje registro

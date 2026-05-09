@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	"github.com/fatih/color"
-	"github.com/kauefraga/flexoeshoje-cli/internal/entities"
-	"github.com/kauefraga/flexoeshoje-cli/internal/infra"
+	"github.com/kauefraga/flexoeshoje-cli/v2/internal/entities"
+	"github.com/kauefraga/flexoeshoje-cli/v2/internal/infra"
 )
 
 func CreatePushup(db *sql.DB, pushup entities.NewPushup) error {

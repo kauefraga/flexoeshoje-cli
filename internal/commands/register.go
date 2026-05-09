@@ -3,8 +3,8 @@ package commands
 import (
 	"log"
 
-	"github.com/kauefraga/flexoeshoje-cli/internal/infra"
-	"github.com/kauefraga/flexoeshoje-cli/internal/usecases"
+	"github.com/kauefraga/flexoeshoje-cli/v2/internal/infra"
+	"github.com/kauefraga/flexoeshoje-cli/v2/internal/usecases"
 	"github.com/spf13/cobra"
 )
 

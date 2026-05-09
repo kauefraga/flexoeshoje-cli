@@ -1,4 +1,4 @@
-module github.com/kauefraga/flexoeshoje-cli
+module github.com/kauefraga/flexoeshoje-cli/v2
 
 go 1.25.0
 

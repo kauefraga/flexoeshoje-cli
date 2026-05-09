@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/kauefraga/flexoeshoje-cli/internal/entities"
+	"github.com/kauefraga/flexoeshoje-cli/v2/internal/entities"
 )
 
 func FindTodayPushups(db *sql.DB) ([]entities.Pushup, error) {
