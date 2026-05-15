@@ -9,7 +9,7 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:     "flexoeshoje",
-	Version: "2.0.1",
+	Version: "2.0.2",
 	Short:   "Registre suas flexões diárias",
 	Long:    "Registre quantas flexões de braço você executou hoje sem sair do terminal.",
 	Example: `  flexoeshoje registro
