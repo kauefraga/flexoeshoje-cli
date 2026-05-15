@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"log"
 	"os"
+	"path/filepath"
 
 	"github.com/fatih/color"
 	_ "modernc.org/sqlite"
@@ -12,6 +13,24 @@ import (
 func checkIfDBExists(path string) bool {
 	_, err := os.Stat(path)
 	return err == nil
+}
+
+func findDbPath() string {
+	configDir, err := os.UserConfigDir()
+	if err != nil {
+		log.Fatalln("Ocorreu um erro ao acessar o diretório das configurações")
+	}
+
+	appDir := filepath.Join(configDir, "flexoeshoje-cli")
+
+	err = os.MkdirAll(appDir, 0755)
+	if err != nil {
+		log.Fatalln("Ocorreu um erro ao criar o diretório da ferramenta")
+	}
+
+	dbPath := filepath.Join(appDir, "flexoeshoje.db")
+
+	return dbPath
 }
 
 func createPushupsTable(db *sql.DB) {
@@ -28,10 +47,12 @@ func createPushupsTable(db *sql.DB) {
 }
 
 func ConnectToDB() *sql.DB {
-	// Check before it's automatically created by sql.Open
-	hasDB := checkIfDBExists("./flexoeshoje.db")
+	dbPath := findDbPath()
 
-	db, err := sql.Open("sqlite", "./flexoeshoje.db")
+	// Check before it's automatically created by sql.Open
+	hasDB := checkIfDBExists(dbPath)
+
+	db, err := sql.Open("sqlite", dbPath)
 
 	if err != nil {
 		log.Fatalln("Ocorreu um erro ao conectar com o banco de dados")
