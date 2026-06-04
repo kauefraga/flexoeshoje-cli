@@ -27,9 +27,14 @@ func FindTodayPushups(db *sql.DB) ([]entities.Pushup, error) {
 			return nil, fmt.Errorf("Ocorreu um erro durante o scan do registro de flexão: %v", err)
 		}
 
-		p.CreatedAt, err = time.Parse("2006-01-02 15:04:05", createdAt)
+		// Try parsing ISO 8601 format first (how modernc.org/sqlite returns it)
+		p.CreatedAt, err = time.Parse("2006-01-02T15:04:05Z", createdAt)
 		if err != nil {
-			return nil, fmt.Errorf("Ocorreu um erro ao converter a data do registro: %v", err)
+			// Fall back to expected format
+			p.CreatedAt, err = time.Parse("2006-01-02 15:04:05", createdAt)
+			if err != nil {
+				return nil, fmt.Errorf("Ocorreu um erro ao converter a data do registro: %v", err)
+			}
 		}
 
 		pushups = append(pushups, p)
